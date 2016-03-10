@@ -1,0 +1,32 @@
+#Classification of datasets using Naive Baye's algorithm
+# this program also calculates accuracy of the algorithm with respect to given data set
+
+ install.packages('e1071', dependencies = TRUE, repos="http://cran.us.r-project.org")
+ library('e1071')
+
+
+ #At first import data sets using R studio and the imported data sets are stored in my_data array
+ my_data <- list(alc, irisNew, adult1, seed, pima)
+  
+ my_data <- list(alc, irisNew, adult1, seed, pima)
+ for(j in 1:5) {
+    dataset_frame<-as.data.frame(my_data[j])
+    total=0
+   
+     #sampling data in 90:10 ratio
+      DatasetIndexes=sample(1:nrow(dataset_frame), size=0.1*nrow(dataset_frame))
+      datasetTesting=dataset_frame[DatasetIndexes,]   #test data set 10%
+      pimadatasetTraining1=dataset_frame[-DatasetIndexes,] #training data set 90%
+  
+      datasetTraining_frame<-as.data.frame(pimadatasetTraining1)
+      datasetTesting_frame<-as.data.frame(datasetTesting)
+      #construction of model
+      naiveBayesModel<-naiveBayes(as.factor(dec)~.,data=datasetTraining_frame)  #dec is the classification varaible
+      predictedClass<-predict(naiveBayesModel, datasetTesting_frame, type='class')
+      table(predictedClass,datasetTesting_frame$dec)
+      accuracy<- (sum(predictedClass==datasetTesting_frame$dec)/length(datasetTesting_frame$dec))*100.0
+      
+
+      print(paste("Overall accuracy of Naive Bayes classification - for data set ",data_names[j], accuracy))
+ 
+  }
