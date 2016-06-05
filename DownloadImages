@@ -1,0 +1,22 @@
+#Python code to download images from the specifies URL
+
+import urllib
+from bs4 import BeautifulSoup
+import os
+
+
+
+def download_images():
+    url = "http://www.utdallas.edu/~axn112530/cs6375/unsupervised/images/"
+    html = urllib.request.urlopen(url)
+    soup = BeautifulSoup(html)
+
+    dl_path = "./data/"
+    if not os.path.exists(dl_path):
+        os.makedirs(dl_path)
+
+    imgs = url
+    for i in range(1,6):
+        img_name = "image"+str(i)+".jpg"
+        imgurl = imgs+img_name
+        urllib.request.urlretrieve(imgurl,dl_path+img_name)
